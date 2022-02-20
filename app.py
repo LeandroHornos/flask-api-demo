@@ -44,14 +44,12 @@ def addNewUser():
     # Get user data from request
     # Some validation should be done here
     new_user = request.json
-    # add new id and save to "database"
+    # add new id and update user list
     new_user["id"] = new_id
     data.append(new_user)
+    # save to "database"
     with open('mock-users.json', 'w') as outfile:
         outfile.write(json.dumps(data))
-
-    # Update users list
-
     return jsonify({"message": "success", "user": new_user})
 
 # Helper functions

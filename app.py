@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
 import json
 
+from jinja2 import Undefined
+
 
 # Mock Database
 
@@ -20,6 +22,29 @@ app = Flask(__name__)
 @app.route("/ping")
 def ping():
     return jsonify({"message:": "Pong"})
+
+
+@app.route("/allusers")
+def allUsers():
+    return jsonify(data)
+
+
+@app.route("/userbyid/<string:user_id>")
+def userById(user_id):
+    id = int(user_id)
+    user = getUserById(id, data)
+    return jsonify(user)
+
+
+# Helper functions
+def getUserById(id, users):
+    print("id:", id)
+    match = {"user": Undefined, "message": "not found"}
+    for user in users:
+        if user["id"] == id:
+            match = {"user": user, "message": "user found"}
+            break
+    return match
 
 
 if __name__ == "__main__":
